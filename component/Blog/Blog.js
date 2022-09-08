@@ -1,6 +1,8 @@
 import React from 'react'
+import { sanityClient, urlFor } from '../../sanity'
+import {PricetagOutline, CalendarOutline} from "react-ionicons"
 
-const Blog = () => {
+const Blog = ({post}) => {
   return (
     <div>
         <section className="blog" id="blog">
@@ -11,7 +13,44 @@ const Blog = () => {
           <h2 className="h2 section-title">Our latest articles & resources</h2>
 
           <ul className="blog-list">
+          {post.map(posts => (
+            <li key={posts._id}>
+            <div className="blog-card">
 
+              <figure className="blog-banner">
+                <a href="#">
+                  <img src={urlFor(post.mainImage).url()} alt="How is technology working with new things?"
+                    loading="lazy" className="w-100"/>
+                </a>
+              </figure>
+
+              <div className="blog-content">
+
+                <ul className="blog-meta-list">
+
+                  <li className="blog-meta-item">
+                   <PricetagOutline/>
+
+                    <a href="#" className="blog-meta-link">Technology</a>
+                  </li>
+
+                  <li className="blog-meta-item">
+                    <CalendarOutline />
+
+                    <time className="blog-meta-time" dateTime="2022-02-25">{new Date(posts.publishedAt).toLocaleDateString()}</time>
+                  </li>
+
+                </ul>
+
+                <h3 className="h3 blog-title">
+                  <a href="#">{posts.title}</a>
+                </h3>
+
+              </div>
+
+            </div>
+          </li>
+          ))}
             <li>
               <div className="blog-card">
 

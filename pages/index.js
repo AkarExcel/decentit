@@ -3,24 +3,37 @@ import Hero from "../component/Hero/Hero"
 import Feature from '../component/Feature/Feature'
 import Service from '../component/Service/Service'
 import Blog from '../component/Blog/Blog'
+import Aos from 'aos'
 import Newsletter from '../component/Newsletter/Newsletter'
 import { ChevronUpOutline } from 'react-ionicons'
 import { useState, useEffect} from 'react'
+import {data} from '../data'
 
-export default function Home() {
+export default function Home({services}) {
 
-    const [visible, setVisible] = useState(false)
-    
+  const [visible, setVisible] = useState(false)
+
+  //This block check if we are on client side.
+  if(typeof window !== 'undefined'){
     const toggleVisible = () => {
       const scrolled = document.documentElement.scrollTop;
       if (scrolled > 300){
-        setVisible(true)
+        setVisible(true) 
       } 
       else if (scrolled <= 300){
         setVisible(false)
       }
     };
 
+    window.addEventListener('scroll', toggleVisible);
+  }
+
+
+
+
+    useEffect(() => {
+      Aos.init({duration:800, once: true, easing: "ease-in-quart"})
+    },[])
 
 
   return (
@@ -34,19 +47,30 @@ export default function Home() {
       <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon"/>
     </Head>
     <article>
-      <Hero />
-      <Feature />
-      <Service />
-      <Blog />
-      <Newsletter />
+      <div><Hero /></div> 
+      <div data-aos="fade-up"><Service services={services}  /></div>
+      <div data-aos="fade-up"><Blog /></div>
+      <div data-aos="fade-left"><Newsletter /></div>
     </article>
           
           {/* #GO TO TOP */}
 
 
-          <a href="#top" className={`go-top ${visible ? "active" : ""} `}   data-go-top>
+          <a href="#top" className={`go-top ${visible ? "active" : ""} `}  data-go-top>
             <ChevronUpOutline/>
         </a>
     </>
   )
 }
+
+
+// add data fetching use getStaticPaths
+export const getStaticProps = async () =>{
+  const services = data;
+
+  return{
+    props:{services},
+
+  }
+  
+  }

@@ -1,45 +1,17 @@
 import React from 'react'
+import Link from 'next/link'
 import {ChevronForwardOutline, CloseOutline} from "react-ionicons"
 
-const Service = () => {
-  const service = [
-    {
-      id: 1,
-      title: "Cloud Databases"
-    },
-    {
-      id: 2,
-      title: "Website Hosting"
-    },
-    {
-      id: 3,
-      title: "Remote Desktop"
-    },
-    {
-      id: 4,
-      title: "File Backup"
-    },
+const Service = ({services}) => {
+  
+  const servicesA = services.filter((service) => {
+    return(
+    service.id <= 4
+  )})
 
-  ]
-  const bests = [
-    {
-      id: 1,
-      title: "Laravel Web Development"
-    },
-    {
-      id: 2,
-      title: "Design and Development"
-    },
-    {
-      id: 3,
-      title: "Android Apps Development"
-    },
-    {
-      id: 4,
-      title: "React Web Development"
-    },
+ 
+  const bests = services.filter(service => service.id > 4)
 
-  ]
   return (
     <div>
         <section className="service" id="service">
@@ -56,14 +28,15 @@ const Service = () => {
             <h2 className="h2 section-title">We are here, to help your startup business</h2>
 
             <ul className="service-list">
-              {service.map(service => (
-                <li key={service.id} className="service-item">
+              {servicesA.map(service => (
+                <Link key={service.id} href={`/services/${service.title}`} passHref>
+                <li className="service-item">
                 <div className="service-item-icon">
                   <ChevronForwardOutline />
                 </div>
                 <h3 className="h3 service-item-title">{service.title}</h3>
-
                 </li>
+                </Link>
               ))
 
               }              
@@ -85,15 +58,17 @@ const Service = () => {
             <ul className="service-list">
               {
                 bests.map(best => (
-                  <li key={best.id} className="service-item">
-
+                  <Link key={best.id} href={`/services/${best.title}`} passHref>
+                  <li  className="service-item">
+                    
+                   
                   <div className="service-item-icon">
                     <ChevronForwardOutline/>
                   </div>
 
                   <h3 className="h3 service-item-title">{best.title}</h3>
-
                 </li>
+                </Link>
                 ))
               }
               

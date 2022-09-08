@@ -6,7 +6,14 @@ export default {
     {
       name: 'title',
       title: 'Title',
+      description: "keep description short",
       type: 'string',
+    },
+    {
+      name: 'description',
+      title: 'Description',
+      type: 'string',
+      //validation: Rule => Rule.max(1500).warning(`A title shouldn't be more than 1500 characters.`),
     },
     {
       name: 'slug',

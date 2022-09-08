@@ -5,6 +5,9 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
+        <meta charSet="UTF-8" />
+      
+      <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon"/>
           <link
             href="https://fonts.googleapis.com/css2?family=Inter&display=optional"
             rel="stylesheet"

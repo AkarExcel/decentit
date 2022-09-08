@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import "aos/dist/aos.css"
 import Layout from '../layout/layout'
 
 
