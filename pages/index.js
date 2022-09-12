@@ -8,8 +8,9 @@ import Newsletter from '../component/Newsletter/Newsletter'
 import { ChevronUpOutline } from 'react-ionicons'
 import { useState, useEffect} from 'react'
 import {data} from '../data'
+import { sanityClient } from '../sanity'
 
-export default function Home({services}) {
+export default function Home({services, posts}) {
 
   const [visible, setVisible] = useState(false)
 
@@ -49,7 +50,7 @@ export default function Home({services}) {
     <article>
       <div><Hero /></div> 
       <div data-aos="fade-up"><Service services={services}  /></div>
-      <div data-aos="fade-up"><Blog /></div>
+      <div data-aos="fade-up"><Blog posts={posts}/></div>
       <div data-aos="fade-left"><Newsletter /></div>
     </article>
           
@@ -64,13 +65,28 @@ export default function Home({services}) {
 }
 
 
-// add data fetching use getStaticPaths
-export const getStaticProps = async () =>{
-  const services = data;
-
-  return{
-    props:{services},
-
-  }
+export const getServerSideProps = async () => {
+    const query = `*[_type == "post"][0...6]{
+      _id,
+      title,
+      publishedAt,
+      categories[] -> {
+        title,         
+},
+      author -> {
+        name,
+        image
+      },
+      description,
+      mainImage,
+      slug
+    }`
   
+    const posts = await sanityClient.fetch(query)
+    const services = data;
+    return{
+      props: {
+        posts,services
+      }
+    }
   }

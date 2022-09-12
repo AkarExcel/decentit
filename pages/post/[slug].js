@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PortableText from 'react-portable-text'
 import { sanityClient, urlFor } from '../../sanity'
 import {useForm, SubmitHandler} from "react-hook-form"
 import { data } from 'autoprefixer'
 
 function post({post}) {
+    const [submited, setSubmitted] = useState(false)
 
     const {register, 
         handleSubmit, 
@@ -17,6 +18,7 @@ function post({post}) {
             body: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json' },
         }).then(() => (
+            setSubmitted(!submited),
             console.log(data)
         )).catch((err) => (
             console.log(err)
@@ -69,7 +71,13 @@ function post({post}) {
             </div>
         </article>
         <br></br>
-        
+    {submited ? 
+        <div className='flex flex-col py-10 my-10 max-w-2xl text-center
+        mx-auto bg-blue-400 text-white'>
+            <h3 className='text-xl md:text-3xl font-bold '>Thank you for submitting your comment</h3>
+            <p className='text-sm md:text-base'>Once it has been approved, it will appear Below!</p>
+        </div>
+        :   
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col max-w-2xl mx-auto my-10' action="">
             <div className='flex flex-col mb-5'>
             <p className='text-sm text-blue-500'>Enjoyed this article?</p>
@@ -113,7 +121,35 @@ function post({post}) {
             </label>
             <button className='shadow w-full py-2 px-4 text-white btn btn-secondary '>Submit</button>
         </form>
+    
+    }
 
+   {/* comments  */}
+   
+   <div className="container px-0 mx-auto sm:px-5">
+   <h3 className='text-2xl'>Comments</h3>
+   <br></br>
+    {post.comments.map((comment) => (
+    <div key={comment._id} className="flex-col mt-1 w-full py-4 mx-auto bg-white border-b-2 shadow-blue-200
+    border-r-2 border-gray-200 sm:px-4 sm:py-4 md:px-4 sm:rounded-lg sm:shadow-sm md:w-[80%]">
+            <div className="flex items-center flex-1 px-4 font-bold leading-tight">{comment.name}
+                <span className="ml-2 text-xs font-normal text-gray-500">
+                {new Date(comment._updatedAt).toLocaleDateString()}</span>
+            </div>
+            <div className="flex-1 px-2 ml-2 text-sm font-medium leading-loose text-gray-600">
+                {comment.comment}
+            </div>
+            <button className="inline-flex items-center px-1 pt-2 ml-1 flex-column">
+                        <svg className="w-5 h-5 ml-2 text-gray-600 cursor-pointer fill-current hover:text-gray-900"
+                            viewBox="0 0 95 78" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M29.58 0c1.53.064 2.88 1.47 2.879 3v11.31c19.841.769 34.384 8.902 41.247 20.464 7.212 12.15 5.505 27.83-6.384 40.273-.987 1.088-2.82 1.274-4.005.405-1.186-.868-1.559-2.67-.814-3.936 4.986-9.075 2.985-18.092-3.13-24.214-5.775-5.78-15.377-8.782-26.914-5.53V53.99c-.01 1.167-.769 2.294-1.848 2.744-1.08.45-2.416.195-3.253-.62L.85 30.119c-1.146-1.124-1.131-3.205.032-4.312L27.389.812c.703-.579 1.49-.703 2.19-.812zm-3.13 9.935L7.297 27.994l19.153 18.84v-7.342c-.002-1.244.856-2.442 2.034-2.844 14.307-4.882 27.323-1.394 35.145 6.437 3.985 3.989 6.581 9.143 7.355 14.715 2.14-6.959 1.157-13.902-2.441-19.964-5.89-9.92-19.251-17.684-39.089-17.684-1.573 0-3.004-1.429-3.004-3V9.936z"
+                                fillRule="nonzero" />
+                        </svg>
+                    </button>
+    </div>
+    ))}
+   </div>
 
     </main>
   )
@@ -145,19 +181,25 @@ export const getStaticPaths = async() => {
 }
 
 export const getStaticProps = async({params}) => {
-    const query = `*[_type == "post" && slug.current == $slug][0]{
-    _id,
-    publishedAt,
-    title,
-    author -> {
-        image,
-        name
-    },
-    description,
-    mainImage,
-    slug,
-    body,
-}`
+    const query = `*[_type == "post" && 
+    slug.current == "first-post"][0]{
+      _id,
+      publishedAt,
+      title,
+      author -> {
+          image,
+          name
+      },
+     "comments": *[
+          _type == "comment" && 
+          post._ref == ^._id &&
+          approved == true
+      ],
+      description,
+      mainImage,
+      slug,
+      body,
+  }`
 
     const post = await sanityClient.fetch(query, {
         slug: params?.slug
