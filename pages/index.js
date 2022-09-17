@@ -49,7 +49,7 @@ export default function Home({services, posts}) {
     </Head>
     <article>
       <div><Hero /></div> 
-      <div data-aos="fade-up"><Service services={services}  /></div>
+      <div data-aos="fade-up"><Service services={services}/></div>
       <div data-aos="fade-up"><Blog posts={posts}/></div>
       <div data-aos="fade-left"><Newsletter /></div>
     </article>
@@ -65,7 +65,7 @@ export default function Home({services, posts}) {
 }
 
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
     const query = `*[_type == "post"][0...6]{
       _id,
       title,
@@ -81,9 +81,24 @@ export const getServerSideProps = async () => {
       mainImage,
       slug
     }`
+
+    const serviceQuery = `*[_type == 'service']{
+      _id,
+      description,
+      name,
+      title,
+      slug,
+      images[] -> {
+        title,
+        mainImage,
+        _id,
+      }
+    }`
+  
+    const services = await sanityClient.fetch(serviceQuery)
   
     const posts = await sanityClient.fetch(query)
-    const services = data;
+    // const services = data;
     return{
       props: {
         posts,services

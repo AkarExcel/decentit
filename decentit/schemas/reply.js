@@ -1,6 +1,6 @@
 export default {
-    name: 'comment',
-    title: 'Comment',
+    name: 'reply',
+    title: 'Reply',
     type: 'document',
     fields: [
       {
@@ -19,14 +19,14 @@ export default {
         type: "string",
       },
       {
-        name: "comment",
+        name: "reply",
         type: "string"
       },
       {
-        name: "post",
+        name: "comment",
         type: "reference",
         to: [{
-            type: 'post'
+            type: 'comment'
         }],
       },
       

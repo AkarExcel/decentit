@@ -1,16 +1,19 @@
 import React from 'react'
 import Link from 'next/link'
 import {ChevronForwardOutline, CloseOutline} from "react-ionicons"
+import { sanityClient } from '../../sanity'
+
 
 const Service = ({services}) => {
-  
-  const servicesA = services.filter((service) => {
+
+  const servicesA = services.filter((service, index) => {
     return(
-    service.id <= 4
+    index <= 3
   )})
 
+  // console.log(servicesA)
  
-  const bests = services.filter(service => service.id > 4)
+  // const bests = services.filter((service, index) => index > 3)
 
   return (
     <div>
@@ -28,8 +31,8 @@ const Service = ({services}) => {
             <h2 className="h2 section-title">We are here, to help your startup business</h2>
 
             <ul className="service-list">
-              {servicesA.map(service => (
-                <Link key={service.id} href={`/services/${service.title}`} passHref>
+              {services.map(service => (
+                <Link key={service.id} href={`/services/${service.slug.current}`} passHref>
                 <li className="service-item">
                 <div className="service-item-icon">
                   <ChevronForwardOutline />
@@ -45,7 +48,7 @@ const Service = ({services}) => {
 
           </div>
 
-          <figure className="service-banner">
+          {/* <figure className="service-banner">
             <img src="./assets/images/service-2.png" alt="Illustration art" loading="lazy" className="w-100"/>
           </figure>
 
@@ -75,7 +78,7 @@ const Service = ({services}) => {
 
             </ul>
 
-          </div>
+          </div> */}
 
         </div>
       </section>

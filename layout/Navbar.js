@@ -65,7 +65,9 @@ const Navbar = () => {
             </li>
 
             <li>
-              <a href="#newsletter" className="navbar-link" data-navbar-link>Newsletter</a>
+              <Link href="/#newsletter">
+              <a  className="navbar-link" data-navbar-link>Newsletter</a>
+              </Link>
             </li>
 
           </ul>
@@ -73,7 +75,7 @@ const Navbar = () => {
       </nav>
       <Link href='/contact'>
       <button className="btn btn-secondary">
-        <span>Get Started</span>
+        <span>REQUEST A QUOTE</span>
 
         <ChevronForwardOutline
         color="white"

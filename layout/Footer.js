@@ -23,8 +23,7 @@ const Footer = () => {
                 </a>
 
                 <p className="section-text">
-                    Lorem ipsum dolor sit amet, consectetur, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
-                    minim.
+                Decent IT has been helping big and small businesses realize and reap the benefits of effective IT services and solutions for years.
                 </p>
 
                 <div className="location-text">
@@ -33,7 +32,7 @@ const Footer = () => {
                     </div>
 
                     <address className="address">
-                    2750 Quadra Street Victoria, Canada.
+                    24 Airport Rd, Rukpokwu 500102, Port Harcourt, Nigeria.
                     </address>
                 </div>
 
@@ -64,26 +63,6 @@ const Footer = () => {
                     <a href="#" className="quicklink">Insurance</a>
                     </li>
 
-                    <li>
-                    <a href="#" className="quicklink">Property</a>
-                    </li>
-
-                    <li>
-                    <a href="#" className="quicklink">Big Data</a>
-                    </li>
-
-                    <li>
-                    <a href="#" className="quicklink">Distance Learning</a>
-                    </li>
-
-                    <li>
-                    <a href="#" className="quicklink">Chatbot</a>
-                    </li>
-
-                    <li>
-                    <a href="#" className="quicklink">Medical</a>
-                    </li>
-
                 </ul>
                 </div>
 
@@ -97,7 +76,7 @@ const Footer = () => {
                     <MailOutline/>
                     </div>
 
-                    <a href="mailto:hello@solutry.com" className="contact-link">hello@solutry.com</a>
+                    <a href="mailto:hello@solutry.com" className="contact-link">info@decentitservice.com</a>
                     </li>
 
                     <li className="contact-item">
@@ -105,7 +84,7 @@ const Footer = () => {
                      <CallOutline/>
                     </div>
 
-                    <a href="tel:+14854560102" className="contact-link">+1-485-456-0102</a>
+                    <a href="tel:+14854560102" className="contact-link">+234-807-838-0715</a>
                     </li>
 
                 </ul>

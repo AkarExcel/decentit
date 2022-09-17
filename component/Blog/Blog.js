@@ -1,10 +1,10 @@
 import React from 'react'
+import { isValid, parseISO, format } from 'date-fns'
 import { sanityClient, urlFor } from '../../sanity'
 import {PricetagOutline, CalendarOutline} from "react-ionicons"
 import Link from 'next/link'
 
 const Blog = ({posts}) => {
-  console.log(posts[0].categories.title)
   return (
     <div>
         <section className="blog" id="blog">
@@ -44,8 +44,8 @@ const Blog = ({posts}) => {
 
                   <li className="blog-meta-item">
                     <CalendarOutline />
-
-                    <time className="blog-meta-time" dateTime="2022-02-25">{new Date(post.publishedAt).toLocaleDateString()}</time>
+                    <time className='blog-meta-time ml-1' dateTime={post.publishedAt}>
+                      {format(parseISO(post.publishedAt), 'LLLL	d, yyyy')}</time>
                   </li>
 
                 </ul>

@@ -107,7 +107,7 @@ button { cursor: pointer; }
 
 input { width: 100%; }
 
-html {
+hml {
   font-family: var(--ff-be-vietnam-pro);
   scroll-behavior: smooth;
 }
@@ -1146,4 +1146,8 @@ responsive larger than 350px screen */
 
   .newsletter-content { width: 55%; }
 
+}
+
+.flip {
+transform: scaleX(-1)
 }
